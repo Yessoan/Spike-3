@@ -33,10 +33,10 @@ goals = {
 
 # Global (read-only) actions and effects
 actions = {
-    'get raw food': { 'Eat': -3 },
-    'get snack': { 'Eat': -2 },
-    'sleep in bed': { 'Sleep': -4 },
-    'sleep on sofa': { 'Sleep': -2 }
+    'get raw food': { 'Eat': -3},
+    'get snack': { 'Eat': -2 , 'Sleep': 1},
+    'sleep in bed': { 'Sleep': -4, 'Eat': 1},
+    'sleep on sofa': { 'Sleep': -2, 'Eat': 1}
 }
 
 
@@ -69,9 +69,6 @@ def action_utility(action, goal):
         return 0
 
     ### Extension
-    ###
-    ###  - return a higher utility for actions that don't change our goal past zero
-    ###  and/or
     ###  - take any other (positive or negative) effects of the action into account
     ###    (you will need to add some other effects to 'actions')
 
@@ -125,7 +122,7 @@ def choose_action():
 
                 print(str(projected_goal), ' vs ', str(resultant_goal))
 
-                if (resultant_goal < 0 and resultant_goal > projected_goal) or (projected_goal > resultant_goal and resultant_goal >= 0):
+                if (resultant_goal <= 0 and resultant_goal > projected_goal) or (projected_goal > resultant_goal and resultant_goal == 0):
                     
                     best_action = key
                     best_utility = action_value
